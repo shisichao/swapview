@@ -67,10 +67,10 @@ func GetInfo(pid int) (info Info, err error) {
 		return
 	}
 	var comm = string(bs)
-	if strings.HasSuffix(comm,"\0"){
+	if strings.HasSuffix(comm,"\x00"){
 		comm = comm[:len(comm)-1]
 	}
-	info.comm = strings.Replace(comm,"\0"," ",-1)
+	info.comm = strings.Replace(comm,"\x00"," ",-1)
 	
 	bs,err := ioutil.ReadFile(fmt.Sprintf("/proc/%d/smaps",pid))
 	if er != nil {
